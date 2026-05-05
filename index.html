@@ -7,5 +7,60 @@
         <link rel="stylesheet" href="styles.css" />
         <script src="./index.js" type="module"></script>
     </head>
-    <body></body>
+
+    <body>
+        <div class="outer_wrapper">
+            <header>
+                <div class="logo">
+                    <img src="./assets/images/logo.svg" alt="Project logo" />
+                </div>
+                <div class="settings">
+                    <div class="dropdown">
+                        <div class="icon">
+                            <img
+                                src="./assets/images/icon-units.svg"
+                                alt="units icon"
+                            />
+                        </div>
+                        <span>Units</span>
+                        <div class="drop_icon">
+                            <img
+                                src="./assets/images/icon-dropdown.svg"
+                                alt="dropdown icon"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="wrapper">
+                <div class="inner">
+                    <div class="top">
+                        <div class="title">
+                            <h1></h1>
+                        </div>
+                        <search>
+                            <div class="search">
+                                <input
+                                    type="text"
+                                    placeholder="Search for a place..."
+                                />
+                                <button type="button" class="btn search">
+                                    Search
+                                </button>
+                            </div>
+                        </search>
+                    </div>
+                    <main>
+                        <div class="left">
+                            <div class="top main-info-wrapper"></div>
+                            <div class="bottom additional-info-wrapper"></div>
+                        </div>
+                        <div class="right">
+                            <div class="forecast-wrapper"></div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

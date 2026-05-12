@@ -90,7 +90,88 @@ h6 {
     --blue-700: hsl(248, 70%, 36%);
 }
 
-.outer_wrapper {
+body {
     background-color: var(--neutral-900);
+}
+
+.outer_wrapper {
     color: white;
+    height: 100vh;
+    max-width: 1440px;
+    margin: 4rem auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.settings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.wrapper {
+    .top {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    main {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 2rem;
+
+        .left {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            grid-column: span 4;
+
+            gap: 1rem;
+
+            .main-info-wrapper {
+                grid-column: span 4;
+                grid-row: span 2;
+                background-image: url(./assets/images/bg-today-large.svg);
+                background-repeat: no-repeat;
+                /* width: 100%; */
+                background-size: cover;
+            }
+            .additional-info-wrapper {
+                display: grid;
+                grid-template-columns: subgrid;
+                grid-column: span 4;
+
+                .item {
+                    display: flex;
+                    gap: 1rem;
+                    padding: 1 rem;
+                }
+            }
+            .forecast-wrapper {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                grid-column: span 4;
+            }
+        }
+        .right {
+            grid-column: span 2;
+
+            .hourly-forecast-wrapper {
+                display: grid;
+                grid-template-rows: repeat(auto-fit, minmax(min(320px), 1fr));
+            }
+
+            .days {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+    }
 }

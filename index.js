@@ -31,65 +31,6 @@ async function get_weather_data(location, date_from, date_to, API_KEY) {
     }
 }
 
-const test_layout = {
-    node: "div",
-    class: "",
-    children: [
-        {
-            node: "div",
-            class: ["inner-item"],
-            children: [
-                {
-                    node: "p",
-                    class: ["test-p"],
-                    children: [],
-                },
-                {
-                    node: "p",
-                    class: ["test-p"],
-                    children: [],
-                },
-            ],
-        },
-        {
-            node: "div",
-            class: ["inner-item", "temp"],
-            children: [
-                {
-                    node: "p",
-                    class: ["temp"],
-                    children: [],
-                },
-            ],
-        },
-    ],
-};
-
-function create_layout(nodes = {}, result = []) {
-    if (nodes.children.length === 0) {
-        return result;
-    }
-    // console.log(nodes);
-    nodes.children.forEach((child) => {
-        console.log(child.node);
-        console.log(child.class);
-        if (child.node !== "") {
-            const item = document.createElement(child.node);
-            console.log(item);
-            if (Array.isArray(child.class) && child.class.length >= 0)
-                item.classList.add(...child.class);
-            result.push(item);
-            console.log(result);
-            // return result;
-        }
-
-        create_layout(child, result);
-    });
-}
-
-const layout = create_layout(test_layout, []);
-console.log(layout);
-
 async function get_and_populate(data) {
     // const moscow = await get_weather_data("moscow", "", "", API_KEY);
     // console.log(moscow);

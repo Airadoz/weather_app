@@ -14,12 +14,13 @@ const hourly_forecast_wrapper = document.querySelector(
 
 const mode = false;
 
-const formatter = new Intl.DateTimeFormat("ru-RU", {
+const formatter = new Intl.DateTimeFormat("en-EN", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
 });
+// console.log(formatter.format(new Date()));
 const today = new Intl.DateTimeFormat("ru-RU").format(new Date());
 // console.log(today);
 if (!window.localStorage.getItem(today)) {
@@ -46,3 +47,9 @@ async function get_weather_data(location, api_key) {
 }
 const london = await get_weather_data("london", API_KEY);
 await console.log(london);
+
+function get_template_data(template_id) {
+    const orig = document.getElementById(template_id);
+    const copy = orig.cloneNode(true);
+    return copy;
+}

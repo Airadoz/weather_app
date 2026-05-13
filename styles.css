@@ -179,6 +179,16 @@ header {
                 display: grid;
                 grid-template-columns: repeat(7, 1fr);
                 grid-column: span 4;
+                gap: 1rem;
+
+                .subtitle {
+                    text-align: center;
+                }
+
+                .info.bottom {
+                    display: flex;
+                    justify-content: space-between;
+                }
             }
         }
         .right {

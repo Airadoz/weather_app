@@ -53,3 +53,7 @@ function get_template_data(template_id) {
     const copy = orig.cloneNode(true);
     return copy;
 }
+const main_info_node = get_template_data("main-info-wrapper");
+const additional_info_node = get_template_data("additional-info");
+const daily_forecast_node = get_template_data("daily-forecast");
+const hourly_forecast_node = get_template_data("hourly-forecast");

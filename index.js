@@ -101,7 +101,7 @@ function populate_additional_node(additional_wrapper, template, data) {
         if (key === 3) {
             item.querySelector(".sub-title").innerText = order[key];
             item.querySelector(".info").innerText =
-                data.currentConditions.preciptype;
+                data.currentConditions.preciptype ?? 0;
         }
     });
 

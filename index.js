@@ -22,7 +22,8 @@ const formatter = new Intl.DateTimeFormat("en-EN", {
 });
 // console.log(formatter.format(new Date()));
 const today = new Intl.DateTimeFormat("ru-RU").format(new Date());
-// console.log(today);
+const day_formatter = new Intl.DateTimeFormat("en-EN", { weekday: "short" });
+// console.log(day);
 if (!window.localStorage.getItem(today)) {
     window.localStorage.setItem(today, JSON.stringify({}));
 }
@@ -108,6 +109,33 @@ function populate_additional_node(additional_wrapper, template, data) {
     additional_wrapper.innerHTML = "";
     additional_wrapper.append(...items);
 }
+function populate_daily_forecast(wrapper, template, data) {
+    const days = data.days;
+    const to_display = [];
+    const items = template.querySelectorAll(".item");
+
+    days.forEach((day, key) => {
+        if (key <= 6) to_display.push(day);
+    });
+    items.forEach((item, key) => {
+        item.querySelector(".subtitle").textContent = day_formatter.format(
+            new Date(to_display[key].datetime),
+        );
+        item.querySelector("img").classList.add(to_display[key].icon);
+        item.querySelector("img").src =
+            `/assets/images/icon-${to_display[key].icon}.webp`;
+        item.querySelector(".info.bottom span:nth-of-type(1)").textContent =
+            to_display[key].hours[8].temp;
+        item.querySelector(".info.bottom span:nth-of-type(2)").textContent =
+            to_display[key].hours[20].temp;
+    });
+    console.log(items);
+
+    console.log(to_display);
+    wrapper.innerHTML = "";
+    wrapper.append(...items);
+}
+populate_daily_forecast(city_forecast_wrapper, daily_forecast_node, london);
 populate_additional_node(
     city_additional_info_wrapper,
     additional_info_node,

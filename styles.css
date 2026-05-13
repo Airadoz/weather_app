@@ -142,6 +142,16 @@ header {
                 background-repeat: no-repeat;
                 /* width: 100%; */
                 background-size: cover;
+                padding: 1rem;
+                height: auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .icon.temp.now img {
+                    width: 48px;
+                    height: 48px;
+                }
             }
             .additional-info-wrapper {
                 display: grid;

@@ -90,8 +90,14 @@ h6 {
     --blue-700: hsl(248, 70%, 36%);
 }
 
+@font-face {
+    font-family: "dm-sans";
+    src: url(./assets/fonts/DM_Sans/DMSans-VariableFont_opsz\,wght.ttf);
+}
+
 body {
     background-color: var(--neutral-900);
+    font-family: "dm-sans";
 }
 
 .outer_wrapper {

@@ -168,7 +168,11 @@ header {
                 .item {
                     display: flex;
                     gap: 1rem;
-                    padding: 1 rem;
+                    padding: 1rem;
+                    flex-direction: column;
+                    border-radius: 20px;
+                    background-color: var(--neutral-800);
+                    border: 1px solid var(--neutral-600);
                 }
             }
             .forecast-wrapper {

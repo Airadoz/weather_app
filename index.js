@@ -61,7 +61,7 @@ const daily_forecast_node = get_template_data("daily-forecast");
 const hourly_forecast_node = get_template_data("hourly-forecast");
 
 function populate_main_node(main_wrapper, template, data) {
-    console.log(template);
+    // console.log(template);
     const city = template.querySelector(".location.date .title");
     const date = template.querySelector(".location.date .sub-title");
 
@@ -77,5 +77,41 @@ function populate_main_node(main_wrapper, template, data) {
     main_wrapper.innerHTML = "";
     main_wrapper.append(template);
 }
+
+function populate_additional_node(additional_wrapper, template, data) {
+    const order = ["Feels like", "Humidity", "Wind", "Precipitation"];
+    const items = template.querySelectorAll(".item");
+    items.forEach((item, key) => {
+        console.log("key: ", key, "value: ", item);
+        if (key === 0) {
+            item.querySelector(".sub-title").innerText = order[key];
+            item.querySelector(".info").innerText =
+                data.currentConditions.feelslike;
+        }
+        if (key === 1) {
+            item.querySelector(".sub-title").innerText = order[key];
+            item.querySelector(".info").innerText =
+                data.currentConditions.humidity;
+        }
+        if (key === 2) {
+            item.querySelector(".sub-title").innerText = order[key];
+            item.querySelector(".info").innerText =
+                `${data.currentConditions.windspeed} km/h`;
+        }
+        if (key === 3) {
+            item.querySelector(".sub-title").innerText = order[key];
+            item.querySelector(".info").innerText =
+                data.currentConditions.preciptype;
+        }
+    });
+
+    additional_wrapper.innerHTML = "";
+    additional_wrapper.append(...items);
+}
+populate_additional_node(
+    city_additional_info_wrapper,
+    additional_info_node,
+    london,
+);
 
 populate_main_node(city_main_info_wrapper, main_info_node, london);

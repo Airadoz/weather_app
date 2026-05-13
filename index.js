@@ -12,29 +12,37 @@ const hourly_forecast_wrapper = document.querySelector(
     ".hourly-forecast-wrapper",
 );
 
+const mode = false;
+
 const formatter = new Intl.DateTimeFormat("ru-RU", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
 });
+const today = new Intl.DateTimeFormat("ru-RU").format(new Date());
+// console.log(today);
+if (!window.localStorage.getItem(today)) {
+    window.localStorage.setItem(today, JSON.stringify({}));
+}
 
-async function get_weather_data(location, date_from, date_to, API_KEY) {
-    const date1 = date_from ? `/${date_from}` : "";
-    const date2 = date_to ? `/${date_to}` : "";
-    const response = await fetch(
-        `${url}${location}${date1}${date2}?key=${API_KEY}`,
-    );
-    if (response.ok) {
-        let result = response.json();
-        return result;
+async function get_weather_data(location, api_key) {
+    const request = await fetch(`${url}${location}?key=${API_KEY}`);
+    const today_data = JSON.parse(localStorage.getItem(today));
+    if (request.ok) {
+        if (!today_data[location]) {
+            today_data[location] = await request.json();
+            // console.log(today_data);
+            localStorage.setItem(today, JSON.stringify(today_data));
+            return JSON.parse(window.localStorage.getItem(today));
+        } else {
+            console.log("Request is saved to localStorage!");
+            const today_data = JSON.parse(localStorage.getItem(today));
+            return today_data[location];
+        }
+    } else {
+        console.error("Something went wrong.", request.status);
     }
 }
-
-async function get_and_populate(data) {
-    // const moscow = await get_weather_data("moscow", "", "", API_KEY);
-    // console.log(moscow);
-}
-
-// const london = await get_weather_data("london", "", "", API_KEY);
-// console.log(london);
+const london = await get_weather_data("london", API_KEY);
+await console.log(london);

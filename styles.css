@@ -141,12 +141,13 @@ header {
                 background-image: url(./assets/images/bg-today-large.svg);
                 background-repeat: no-repeat;
                 /* width: 100%; */
-                background-size: cover;
+                background-size: contain;
                 padding: 1rem;
                 height: auto;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                aspect-ratio: 22/8;
 
                 .icon.temp.now img {
                     width: 48px;

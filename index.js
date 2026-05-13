@@ -27,8 +27,10 @@ if (!window.localStorage.getItem(today)) {
     window.localStorage.setItem(today, JSON.stringify({}));
 }
 
-async function get_weather_data(location, api_key) {
-    const request = await fetch(`${url}${location}?key=${API_KEY}`);
+async function get_weather_data(location, unitGroup, api_key) {
+    const request = await fetch(
+        `${url}${location}?unitGroup=${unitGroup}&key=${API_KEY}`,
+    );
     const today_data = JSON.parse(localStorage.getItem(today));
     if (request.ok) {
         if (!today_data[location]) {
@@ -45,15 +47,35 @@ async function get_weather_data(location, api_key) {
         console.error("Something went wrong.", request.status);
     }
 }
-const london = await get_weather_data("london", API_KEY);
+const london = await get_weather_data("london", "uk", API_KEY);
 await console.log(london);
 
 function get_template_data(template_id) {
     const orig = document.getElementById(template_id);
-    const copy = orig.cloneNode(true);
+    const copy = orig.content.cloneNode(true);
     return copy;
 }
 const main_info_node = get_template_data("main-info-wrapper");
 const additional_info_node = get_template_data("additional-info");
 const daily_forecast_node = get_template_data("daily-forecast");
 const hourly_forecast_node = get_template_data("hourly-forecast");
+
+function populate_main_node(main_wrapper, template, data) {
+    console.log(template);
+    const city = template.querySelector(".location.date .title");
+    const date = template.querySelector(".location.date .sub-title");
+
+    const icon = template.querySelector(".icon.temp.now .icon");
+    const temp = template.querySelector(".icon.temp.now .temp");
+
+    city.innerText = data.address;
+    date.innerText = formatter.format(new Date());
+
+    icon.classList.add(data.currentConditions.icon);
+    icon.src = `/assets/images/icon-${data.currentConditions.icon}.webp`;
+    temp.innerText = data.currentConditions.temp;
+    main_wrapper.innerHTML = "";
+    main_wrapper.append(template);
+}
+
+populate_main_node(city_main_info_wrapper, main_info_node, london);

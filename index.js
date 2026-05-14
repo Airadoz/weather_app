@@ -19,11 +19,19 @@ const formatter = new Intl.DateTimeFormat("en-EN", {
     year: "numeric",
     month: "long",
     day: "numeric",
+    hour: "2-digit",
 });
-// console.log(formatter.format(new Date()));
-const today = new Intl.DateTimeFormat("ru-RU").format(new Date());
-const day_formatter = new Intl.DateTimeFormat("en-EN", { weekday: "short" });
-// console.log(day);
+console.log(formatter.format(new Date()));
+const today = new Intl.DateTimeFormat("en-EN").format(new Date());
+const day_formatter_short = new Intl.DateTimeFormat("en-EN", {
+    weekday: "short",
+});
+const day_formatter_long = new Intl.DateTimeFormat("en-EN", {
+    weekday: "long",
+});
+const time_formatter = new Intl.DateTimeFormat("en-EN", { hour: "2-digit" });
+console.log(time_formatter.format(new Date(`${today} 01:00:00`)));
+console.log(today);
 if (!window.localStorage.getItem(today)) {
     window.localStorage.setItem(today, JSON.stringify({}));
 }
@@ -38,7 +46,8 @@ async function get_weather_data(location, unitGroup, api_key) {
             today_data[location] = await request.json();
             // console.log(today_data);
             localStorage.setItem(today, JSON.stringify(today_data));
-            return JSON.parse(window.localStorage.getItem(today));
+            const data = JSON.parse(localStorage.getItem(today));
+            return data[location];
         } else {
             console.log("Request is saved to localStorage!");
             const today_data = JSON.parse(localStorage.getItem(today));
@@ -118,9 +127,8 @@ function populate_daily_forecast(wrapper, template, data) {
         if (key <= 6) to_display.push(day);
     });
     items.forEach((item, key) => {
-        item.querySelector(".subtitle").textContent = day_formatter.format(
-            new Date(to_display[key].datetime),
-        );
+        item.querySelector(".subtitle").textContent =
+            day_formatter_short.format(new Date(to_display[key].datetime));
         item.querySelector("img").classList.add(to_display[key].icon);
         item.querySelector("img").src =
             `/assets/images/icon-${to_display[key].icon}.webp`;
@@ -135,6 +143,29 @@ function populate_daily_forecast(wrapper, template, data) {
     wrapper.innerHTML = "";
     wrapper.append(...items);
 }
+
+function populate_hourly_forecast(wrapper, template, data) {
+    const select = wrapper.querySelector("select");
+    const day = day_formatter_long.format(new Date(today));
+    select.value = day.toLowerCase();
+
+    const hours = data.days[0].hours;
+    const items = template.querySelectorAll(".item");
+
+    items.forEach((item, key) => {
+        const icon = item.querySelector("img.icon");
+        icon.src = `./assets/images/icon-${hours[key].icon}.webp`;
+        const time = item.querySelector("p");
+        time.textContent = time_formatter.format(
+            new Date(`${today} ${hours[key].datetime}`),
+        );
+        const temp = item.querySelector(".temp");
+        temp.textContent = hours[key].temp;
+    });
+
+    wrapper.querySelector(".hours").append(...items);
+}
+populate_hourly_forecast(hourly_forecast_wrapper, hourly_forecast_node, london);
 populate_daily_forecast(city_forecast_wrapper, daily_forecast_node, london);
 populate_additional_node(
     city_additional_info_wrapper,

@@ -105,6 +105,7 @@ body {
     height: 100vh;
     max-width: 1440px;
     margin: 4rem auto;
+    overflow: hidden;
 }
 
 header {
@@ -193,15 +194,41 @@ header {
         }
         .right {
             grid-column: span 2;
+            background-color: var(--neutral-800);
+            border-radius: 15px;
+            padding: clamp(0.5rem, 1.5rem, 3rem);
 
             .hourly-forecast-wrapper {
                 display: grid;
-                grid-template-rows: repeat(auto-fit, minmax(min(320px), 1fr));
+                grid-template-rows: repeat(auto-fit, minmax(min(80px), 1fr));
             }
 
             .days {
                 display: flex;
                 justify-content: space-between;
+            }
+            .hours {
+                overflow-y: scroll;
+                max-height: 566px;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+
+                .item {
+                    flex-direction: row;
+                    justify-content: space-between;
+
+                    .time {
+                        display: flex;
+                        justify-content: center;
+                        gap: 1rem;
+                        align-items: center;
+                    }
+                    img {
+                        width: 45px;
+                        height: 45px;
+                    }
+                }
             }
         }
     }
